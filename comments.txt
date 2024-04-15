@@ -1,0 +1,39 @@
+tsx - converter o codigo de ts pra js e executar o node nesse js, de forma 
+automatizada e sem sujar as pastas(criando arquivos js)
+
+dependencias instaladas nesse inicio:
+"dependencies": {
+    "fastify": "^4.26.2"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^1.2.0",
+    "@types/node": "^18.11.18",
+    "eslint": "^8.33.0",
+    "tsx": "^3.12.2",
+    "typescript": "^4.9.5"
+  }
+
+
+
+vms usar o sqlite pois nao precisa de docker ou outra loucura, ele fica
+ali numa pasta fisica
+
+com node, podemos usar queryBuilder - construtor de querys
+ele facilita a escrita das querys (dos codigos SQL), misturando com
+javascriot.
+
+exemplo, inves de fazer SELECT * FROM Users WHERE....
+faremoz 
+knex('users').where({
+    first_name: 'Rodrigo',
+    last_name: 'Augusto'
+}).select('id')
+
+se trocarmos de banco de dados, nao precisamos mudar esse codigo.
+(pra outro banco que o knex suporte, claro.)
+
+instalando knex e sqlite3
+npm i knex sqlite3
+
+ate p configurar eh mais facil, pois nao ha networkd connection, e sim, 
+um filename, que eh o nome do arquivo q vms botar o banco

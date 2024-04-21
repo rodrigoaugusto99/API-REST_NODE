@@ -109,3 +109,43 @@ o script fica assim:
  o comando vai ser:
 
  npm run knex -- migrate:make create-documents
+(Created Migration: C:\documentos\projetos\web\rocketseat\formacao_node\ignite-node-02\db\migrations\20240421190131_create-transactions.ts)
+
+-------------------------------------
+na parte de criacao de tabelas, temos que usar uma sintaxe
+exclusiva do knex, para que ele nao precise mudar qnd a gente
+por ex trocar de sqlite opara postfrees, mysql, eetc
+
+todo arquivo de migration, tem a data que foi criado certinho
+e o nome do arquivo que informamos
+
+tem o up - o que vai fazer.
+tem o down - deu ruim! volta atras
+
+-------------------------
+
+npm run knex -- migrate:latest 
+
+isso vai criar as tabelas. (Batch 1 run: 1 migrations)
+
+
+knex.fn.now pra ser algo universal.
+se for colocar tipo NOW() ou current_time sei la,
+isso eh de um banco especifico, entao n estamos usando o knex direito,
+
+podemos fazer uam outra migration, mas dessa vez n pra "criar", mas
+pra podemos fzr uma migration que so adicionam ou alteram um campo
+
+after id - pra colocar o campo embaixo do id
+index - quer dizer q vms fzr muitas buscas em transacoes especificas
+de uma transacao, entao session_id vai ser usado muito com where
+
+
+
+
+
+
+
+
+
+

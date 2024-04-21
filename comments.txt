@@ -37,3 +37,75 @@ npm i knex sqlite3
 
 ate p configurar eh mais facil, pois nao ha networkd connection, e sim, 
 um filename, que eh o nome do arquivo q vms botar o banco
+
+---------------------------------------
+
+Agora que temos acesso ao banco de dados, precisamos ter:
+tabelas, campos, chaves primeiras, estrangeiras, relaconamentos,
+precisamos configurar td isso
+
+Vamos fzr migrations!
+
+sao controle de versao dentroi do nosso banco de dados.
+
+eh importante para por exemplo, ta eu fazendo um parte do banco
+e o outro fazendo outra parte. eh como se fosse o git, ta eu fazendo
+uma parte do codigo, e ele outra. pra gente ficar no mesmo "lugar"
+eu teria que enviar pra ele o meu codigo pra ele criar la tbm.
+eu teria que mandar meu sql que fiz recentemente pro cara ter o banco 
+atualizado. isso eh ruim.
+
+migrations sao historico de tdoas as mudancas feitas no banco. Essas mudancas
+sao sempre anotadas com a data e o horario que foram criadas. historico certinho.
+
+o mais importante com as migrations eh que temos uma tabela criada automaticamente
+chamada migrations. se tiver desatualziado pq outro alterou, basta rodarmos um comando pra atualizar.
+eh exatamente o mesmo beneficio que o github tras pra gente com equipes de desenvovledores.
+
+knex foi desenvolvido p ser desenvolvido com js, n ts.
+
+convernsao - criar arquivo knexfile.js
+vms criar knexfile.ts e pegar APENAS as configuracoes
+
+temos que criar 
+
+"knex": "node --no-warnings --loader tsx ./node_modules/.bin/knex",
+--loader - p passar outra lib p carregar codigo node (tsx)
+tsx pq entend ts
+e dps, o caminho do binario do knex
+
+npm run knex -h
+dessa forma o -h eh pro npm run
+
+p passar pro knex, tem que ser
+npm run knex -- -h
+
+
+import Knex from 'knex'
+
+export const config: Knex.Config = {
+  client: 'sqlite',
+  connection: {
+    filename: './db/app.db',
+  },
+  useNullAsDefault: true,
+  migrations: {
+    extension: 'ts',
+    directory: './db/migrations',
+  },
+}
+
+export const knex = Knex(config)
+
+assim fico o arquivo de configuracao, o directory estamos mostrando aonde vai ficar a
+pasta migratiosn quando fizermos uma migrations
+
+o script fica assim:
+
+ "knex": "node --no-warnings --import tsx ./node_modules/knex/bin/cli.js",
+ tive que entrar na pasta do knex e achar o bin com o arquivo real
+ antes tava ./node_modules/.bin/knex, e tava dando erro
+
+ o comando vai ser:
+
+ npm run knex -- migrate:make create-documents

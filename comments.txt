@@ -140,12 +140,49 @@ after id - pra colocar o campo embaixo do id
 index - quer dizer q vms fzr muitas buscas em transacoes especificas
 de uma transacao, entao session_id vai ser usado muito com where
 
+-------------------------------
+podemos ver as tabelas com o httpie no terminal, chamando
+http localhost:3333/hello, por causa dessa rota que fizemos,
+pra poder verificar se as tabelas foram criadas realmente
 
+app.get('/hello', async () => {
+  const tables = await knex('sqlite_schema').select('*')
 
+  return tables
+})
 
+se quisermos restartar, criar do zero, temos que deletar a pasta 
+app.db.
 
+podemos tbm fzr essa verificao no beekeeper.
+tabelas, campos, valores, inserir, excluir, dados
 
+-------------------------
+a ideia eh fazer mais rotas que fazem diferentes
+operacoes no banco de dados, grande maioria de APIs sao isso,
+rotas, portas de entrada p um usuario poder trabalhar com nosso banco
+de dados, e com regras de negocio.
 
+-----------------------------------
+
+variaveis de ambiente - variaveis que sao diferentesd em cada ambiente
+
+que estamos executando. ambiente- os momentos da app - desenvolvimento, producao, teste.
+e existem informacoes que sao diferentes em cada ambiente.
+
+por exemplo, banco de dados, em des eh um e em prod eh outro
+
+pro arquivo env ser lido pelo node - npm i dotenv
+
+fazer o .env com as variaveis de ambiente e n deixar subir com gitignore
+fazer o .env.example e deixar subir no git p oturos desenolvedores verem e alterarem
+de acordo com seu ambiente
+
+---------------------------------------
+
+temos que validar os valores de env para evitar que sejam preenchidas com valores
+invalidos, oq causaria erro ao rodar o app (por exemplo, colocar um numero no lugar do
+de uma string)
 
 
 

@@ -185,4 +185,47 @@ invalidos, oq causaria erro ao rodar o app (por exemplo, colocar um numero no lu
 de uma string)
 
 
+-------------------------------------
+plugins do fastify - de rotas
+
+criamos uma pasta pras rotas e colocamos a rota de transactions la.
+
+o arquivo server.ts eh que vai importar as rotas, ou seja, nois vamos acoplar
+pequenos funcionamentos a nossa funcao principal, que eh o app
+
+testando - 
+
+roda isso com http localhost:3333/hello do httpie
+export async function transactionsRoutes(app: FastifyInstance) {
+  app.get('/hello', async () => {
+    const transactions = await knex('transactions').insert({
+        id: 4,
+        title: 'transacao teste x',
+        amount: 3000,
+    }).returning('*')
+
+    return transactions
+  })
+}
+
+dps roda isso pra printar
+export async function transactionsRoutes(app: FastifyInstance) {
+  app.get('/hello', async () => {
+    const transactions = await knex('transactions')
+      .where('amount', 3000)
+      .select('*')
+
+    return transactions
+  })
+}
+
+
+---------------------
+
+
+
+
+
+
+
 

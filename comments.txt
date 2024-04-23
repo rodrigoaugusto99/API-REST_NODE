@@ -341,3 +341,54 @@ qual eh o id do usuario.
 -pegar do request.params
 -validar com zod
 -ai sim fazer a busca.
+
+-------------------
+get para o resumo das transacoes (a soma de todas as colunas amount)
+knex('transactions') - tabela transactions
+.sum('amount' - soma todas as colunas amount
+, { as: 'amount' }) - no response, o nome vai ser amount(antes tava
+um nome esquisito pq a gnete nao tinha posto "nome" pra tabela)
+.first() - pois knex retorna lista, entao pegar o first (sempre vai ser um so msm)
+
+-------------------------------
+estamos so com backend, nao temos frontend, ou seja, nao temos sistema de autenticacao,
+de token, nao temos tabela de usuario, nao temos login por email etc.
+
+mas mesmo assim podemos anotar quem eh o usuario que esta fazendo aquelas requisicoes.
+
+cookies. Quando usuario criar a primeira transacao, que eh onde comeca tudo,
+entao vamos anotar um session_id nos cookies.
+
+npm i @fastify/cookie
+
+-register cookie antes do register transactionRoutes.
+
+logica no POST - 
+se tiver sessionId, manda ele tbm la no insert.
+
+se nao tiver, entra naquele if, e criamos um com o randomUUID.
+e pra salvar esse sessionId nos cookies com o setCookie: 
+reply.setCookie('sessionId', sessionId, {
+  path: '/',
+  maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+})
+
+path - '/', entao todas as rotas terao acesso
+maxAge - data de expiracao do cookie
+
+pronto. Agora quando fizermos um post, automaticamente entrara la um sessionId,
+que tbm seria automaticamente colocado nos cookies do navegador, e do imnsonia tbm.
+
+cookies sao como parametros, mas sao criados pela propria aplicacao e enviados
+automaticamente em todas as requisicoes.
+
+
+
+
+
+
+
+
+
+
+

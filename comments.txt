@@ -320,3 +320,24 @@ declare module 'knex/types/tables' {
   }
 }
 
+--------------------------------------
+
+get para todos as transactions e para uma so
+
+pra todos - return { transactions }
+como um objeto pq ai se for apenas return transactions,
+vai retornar uma lista com varios objetos de transactions.
+mas se for entre chaves, como objeto, vai ser um objeto grandao
+que dentro dele tem uma lista chamada transactions, contendo ai sim
+todas as transactions. e ai, se quisermos retornar outra informacao 
+no futuro, basta colocar dentro do objeto, que ai vai ficar 
+{
+"outro objeto": 200,
+"transactions": [ {}, {}, {} ]
+}
+
+pra um so - antes de fazer a busca no banco, temos que saber
+qual eh o id do usuario. 
+-pegar do request.params
+-validar com zod
+-ai sim fazer a busca.

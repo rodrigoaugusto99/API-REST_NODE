@@ -222,10 +222,80 @@ export async function transactionsRoutes(app: FastifyInstance) {
 
 ---------------------
 
+esse arquivo contem todas rotas sobre transactions, entao todas elas vao comecar
+com /transactions, 
+quando formos buscar todas as transacoes, vai ser /transactions
+quando formps buscar por uma transaction especifica, /transactions/:id
+
+entao vamos colocar prefixo la no arquivo principal quando
+chamamos essa rota
+
+agr, no app.get fica so o '/', sem precisar colocar transactions
+
+- agora criando a rota POST
+-body vem as informacoes que geralmente usamos p criar ou alterar algo,
+geralmente elas vieram de um formulario por ex
+
+request.body. ... o vscode nao ajude em nada.
+NAo sabemos o que o frontend mandou ali.
+entao vamos usar o zod p tipar
+
+entao ao fazer o z.object e dps pegar o body dentro de um parse daquele schema,
+estamos verificando se o body que veio do front respeita aquele schema
+
+respeitar oq? se o title esta presente E eh uma string, mesma coisa pro amount e type.
+
+o parse, se detectar algum erro, ele da um throw, ent n precisamos nos preocupar se essa
+linha do parse nao passar, nada que ta embaixo vai ser executado por causa do throw
+
+const body = createTransactionBodySchema.parse(
+  request.body,
+)
+
+dessa forma, podemos ate desestruturar ele
+
+const { title, amount, type } = createTransactionBodySchema.parse(
+  request.body,
+)
 
 
+agora pegamos esses dados que vieram do frontend pelo body
+e podemos fazer algo com o banco de dados, no caso, inserir, criar.
 
+await knex('transactions').insert({
+      id: randomUUID(),
+      title,
+      amount: type === 'credit' ? amount : amount * -1,
+    })
 
+colocamos o amount de acordo com o tipo de transacao, se for debito, 
+colocamos como negativo, entao fica mais facil la na frente p somar todos
+os valores
+
+geralmente POST nao retorna nada, entao n vamos retornar o objeto que foi 
+criado no banco, vamos sim retornar um status code. HTTP Codes que servem para
+simbolizar o tipo de retorno da api, se deu sucesso ou erro, o tipo de erro/sucesso.
+
+no caso, usaremos o 201, que eh p "recurso criado com sucesso."
+
+Pra testarmos, com httpie fica mais chatinho, entao faremos com imnsonia
+
+IMSNONIA -
+
+-nova request collection
+-nova pasta transactions
+- na parte, nova requisicao do tipo POST, 
+- chamremos a rota de http://localhost:3333/transactions
+- trocamos o nome da requisicao para Create transaction
+
+-no body, com json, enviamos os dados da transactions
+
+se colocarmos creditx, ou seja, com o nome errado, vai dar erro 500, ou seja,
+nao estamos tratando direitinho, realmente o zod trabalhou, nao chegou no 201, entao
+nossa verificacao deu certo, 
+
+pelos menos o zod nao ta deixando passar caso o usuario envie um valor incorreto.
+mas temos que fazer um tratamento mais decente, mais pra frente.
 
 
 

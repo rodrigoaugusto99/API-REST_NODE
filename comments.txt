@@ -382,12 +382,74 @@ que tbm seria automaticamente colocado nos cookies do navegador, e do imnsonia t
 cookies sao como parametros, mas sao criados pela propria aplicacao e enviados
 automaticamente em todas as requisicoes.
 
+--------------------------
+verificao dos cookies nos gets
+
+app.get('/', async (request, reply) => {
+    const sessionId = request.cookies.sessionId
+
+    if(!sessionId) {
+      return reply.status(401).send({
+        error: 'Unauthorized.'
+      })
+    }
+
+dessa forma, pegando o cookies do params e vendo se existe,
+ja podemos lancar excecao se nao exsitir.
+
+eai, caso tiver, eh so fazer a filtragem no select, pra
+pegar apenas aqueles dados que tiverem o campo session_id igual ao
+sessionId
+
+mas essa logica sera feita em todas as requisicoes get, ne?
+entao vamos melhorar isso.
+
+entao vamos fazer um middleware, que sao interceptadores.
+eles vao executar antes de cada uma dessas rotas, e fazer essa
+verificacao. se nao tivero sessionId, retorna erro, se nao, deixa 
+a requisicao ser feita normalmente.
+
+entao criamos o middleware, veja que colcoamos a tipagem de 
+request e reply pq la nao tem nenhuma referencia ao fastify,
+diferentemente do arquivo de rotas, que temos app, fastifyInstance, etc...
+
+entao, pra usarmos esse interceptador que criamos, no segundo parametros
+do get, antes do handler(da funcao em si), colocaremos o parametro preHandler,
+que sera executado antes do handler.
 
 
+app.get('/', {
+    preHandler: [checkSessionIdExists]
+  },async (request, reply) => {
+    
+    const { sessionId } = request.cookies
+    const transactions = await knex('transactions')
+        .where('session_id', sessionId)
+        .select()
+
+    return { transactions }
+  })
 
 
+entao veja que passa pelo preHandler, e dps seguimos normalmente.
+veja tbm que mesmo assim temos que pegar do request o sessionId(
+  usando desestruturacao, pra nao precisar colocar request.cookies.sessionId
+)
 
 
+ai eh so colocar esse preHandler em todas as requisicoes, pegar o cookie em tdoas tbm.
+
+onde ja tiver where, podemos concatenar colocando outro where (andWhere),
+ou podemos fazer um where com um objeto:
+
+.where({
+  session_id: sessionId,
+  id,
+})
+
+id fica sozinho pois ficaria id: id, entao podemos fazer esse shrot syntax
+
+preHandler - pra aproveitar regras de negocio entre varias rotas!
 
 
 

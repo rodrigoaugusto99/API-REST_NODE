@@ -297,5 +297,26 @@ nossa verificacao deu certo,
 pelos menos o zod nao ta deixando passar caso o usuario envie um valor incorreto.
 mas temos que fazer um tratamento mais decente, mais pra frente.
 
+podemos tipar o knex. na documentacao, ao procurar por typescript!
 
+eh bom p deixar o knex mais esperto.
+
+entao aqui nois podemos fazer uma interface, com transactions sendo a tabela,
+e os dados, os campos. Agora, quando fizermos:
+knex(''), ja vai sugir o transactions q eh uma tabela
+e dentro de transactons, vai sugerir todos esses campos abaixo.
+
+isso eh bom pra seguranca e manuntenabilidad no futuro.
+
+declare module 'knex/types/tables' {
+  export interface Tables {
+    transactions: {
+      id: string
+      title: string
+      amount: number
+      created_at: string
+      session_id?: string
+    }
+  }
+}
 

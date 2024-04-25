@@ -451,6 +451,77 @@ id fica sozinho pois ficaria id: id, entao podemos fazer esse shrot syntax
 
 preHandler - pra aproveitar regras de negocio entre varias rotas!
 
+----------------------------
+vejamos que colocamos todos os preHandler em todos os get.
+tbm podemos fazer um app.addHook('preHandler', async (req, reply) {}
+dessa forma, todos que estao dentro do contexto, vao chamar esse preHandler.
+
+mas se colocamos esse app.addHook dentro do contexto de transactionRoutes,
+so estaria acessivel para as rotas dentro desse contexto.
+
+Se quisermos fzr um preehandler pra todos as rotas do app, ai teriamos
+que jogar la no server.ts, antes de todos os registros de todos os 
+plugins(rotas, no caso)
+
+--------------------------------------------------------
+
+entendendo testes automatizados
+
+mt importante p aplicacao - formas pra gente manter confianca na hora de dar manuntencao
+no codigo a longo prazo. Garantem que vc possa mexer no codigo, executar o teste automatizado
+e garantir que o que vc mexeu nao quebrou algo
+
+-unitarios
+uma unidade da aplicacao, de forma isolada. voce testa a funcao sozinha,
+sem contexto, sem precisar ir em tal rota, ir em tal lugar na aplicacao
+
+-de integracao
+entre duas ou mais unidades. se chamamos uma funcao que chama outra funcao
+que chama outra funcao, e queremos testar todas ao mesmo tempo, entao eh teste
+de integracao.
+
+-e2d - ponta a ponta
+testes que basicamente simulam um usuario operando na nossa aplicacao.
+no frontend, seria um teste de abrir a tela de login, faer login, clicar ali etc.
+no backend, quem opera? o frontend. nao tem interface. ai seria, chamadas http,
+websockets, etc. da rota ate o banco de dados, testar tudo, como se o app estivesse
+em producao
+
+piramide de testes - muitos testes unitarios, alguns integracao e poucos e2e, pois 
+os e2e sao bem demorados, pois batem la no banco e etc. e se for varios testes? n da, 
+entao melhor ter varios unitario ao inves de varios e2e, apesar do e2e ser facil de fzr,
+pois nao precisa de arquitetura ou tecnologia diferente.
+
+---------------------------
+mais famoso - jest.
+vamos usar o vitest, que suporta o jest, eh mais perfomatico, suporta ts, esm. jsx.
+o jest precisa de instalar varias coisas, como babel e etc.
+
+criamos uma pasta test, com um arquivo example.spec.ts, colocamos la um teste que espera
+201. ao rodarmos npx vitest, se colocamos a variavel hardcoded ali 201, da certo. se 
+colocarmos outro valor e salvarmos, automaticamente o teste ja roda de novo e mostra a falha.
+(se clicar "a", o teste roda dnv dnv dnv, "q" pra terminar)
+
+script: "test": "vitest" 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

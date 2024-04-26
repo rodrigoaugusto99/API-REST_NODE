@@ -504,15 +504,22 @@ colocarmos outro valor e salvarmos, automaticamente o teste ja roda de novo e mo
 
 script: "test": "vitest" 
 
+SUPERTEST
+npm i supertes -D
+ com isso, fazemos requisicao sem colocar a aplicacao no ar, sem usar o
+ metodo listen
 
+colocamos a parte do listen la no server.ts, e tbm importamos o app.
+ou seja, quando fazendo npm run dev, roda o server.ts, que funciona
+normalmente pq estamos importando o app. fizemos isso pra separar o app,
+e no teste, vms usar o app, sozinho, separado, sem precisar acessar o listen
 
+npm i -D @types/supertest
+tivemos que baixar esse pacote a parte, que foi criado pra deixar o supertest
+tipado, ja que ele foi criado em js puro. Normalmente esses pacotes p isso
+sao feitos pela comunidade e mantidos pela comunidade
 
-
-
-
-
-
-
+chamamos supertest de request p ficar semantico
 
 
 

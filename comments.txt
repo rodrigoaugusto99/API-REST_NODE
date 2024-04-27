@@ -614,6 +614,66 @@ temos que colocar esse build que fizemos la no gitignore.
 quando usamos ele, ele cria por ex knexfile.js por causa do
 knexfile.ts, e alguns outros casos.
 
+------------------------
+iremos fzr o deploy no render.
+
+a maioria das ferramentas de deploy usam apenas
+postgreSQL pq eh o unico bando de dados relacional
+realmente open sourcer
+
+
+nossa aplicaca precisa entao suportar tanto sqlite
+quando postgree.
+
+- adicionar no schema do env o enum para sqlite/pg
+
+- colocar o database_client sqlite em todas as envs.
+pois usamos o sqlite em desenvolviemnto
+
+KnexConfig entao tbm precisa ser dinamico no quesito banco
+
+export const config: Knex.Config = {
+  client: env.DATABASE_CLIENT,
+  connection: {
+    filename: env.DATABASE_URL,
+  },
+
+connection pra pg eh uma string, e p sqlite eh um objeto com string
+entao teremos que fzr ternario p satisfazer os dois casos,
+
+render usa versao antiga do node, entao adicionar esse codigo em package.json.
+"engines": {
+    "node": ">=18"
+  },
+
+
+no schema:
+ PORT: z.coerce.number().default(3333),
+ colocar esse coerce, pq o render envia o PORT
+ como string,e  nao numero.
+ entao esse coerce faz com que o que vier, transforme
+em number
+
+coisas atuais p conferir:
+
+no listen do server.ts
+host: ("RENDER" in process.env) ? '0.0.0.0' : 'localhost',
+
+no package.json, "node": "18" - pra usar a versao do video
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -521,8 +521,14 @@ sao feitos pela comunidade e mantidos pela comunidade
 
 chamamos supertest de request p ficar semantico
 
+beforeAll app.ready pra registrar todas as paradinhas antes de rodar o teste
 
-
+no segundo teste, como cada teste n pode depender de ninguem, entao
+temos que criar uma transacao de novo, apesar de ter outro teste criando transacao
+e validando.
+Nao vamos dar expect nessa criacao dessa transacao. Como p listar transacoes precisa
+de cookie, entao pegaresmos o cookie dessa transacao e faremos um request GET. (antes
+foi POST pra criacao)
 
 
 

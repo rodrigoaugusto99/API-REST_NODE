@@ -6,17 +6,21 @@ import { knex } from '../database'
 import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 
 export async function transactionsRoutes(app: FastifyInstance) {
-  app.get('/', {
-    preHandler: [checkSessionIdExists]
-  },async (request, reply) => {
-    
-    const { sessionId } = request.cookies
-    const transactions = await knex('transactions')
+  app.get(
+    '/',
+    {
+      preHandler: [checkSessionIdExists],
+    },
+    async (request) => {
+      const { sessionId } = request.cookies
+
+      const transactions = await knex('transactions')
         .where('session_id', sessionId)
         .select()
 
-    return { transactions }
-  })
+      return { transactions }
+    },
+  )
 
   app.get(
     '/:id',
@@ -72,6 +76,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     const { title, amount, type } = createTransactionBodySchema.parse(
       request.body,
     )
+
     let sessionId = request.cookies.sessionId
 
     if (!sessionId) {
@@ -79,7 +84,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
 
       reply.setCookie('sessionId', sessionId, {
         path: '/',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       })
     }
 

@@ -560,3 +560,15 @@ export const config: Knex.Config = {
 
 repare que filename tem que ser dinamico. vai trocar
 de acordo com a variavel de ambiente. (que muda com a condicional)
+----------------------
+mais outros dois testes
+
+-no pra pegar transacao por ID, temos que ver no backend como que retorna.
+nao retorna nada. entao o teste tem que se adaptar ao app, nao o contrario.
+
+entao peguemos o id com o body que fizemos a requisicao.
+
+dps fzemos o get especial com o parametro.
+
+summary mesma ideia. 
+sempre atentando aos retornos e as rotas, para nao errar.

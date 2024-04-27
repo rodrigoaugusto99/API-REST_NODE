@@ -572,3 +572,52 @@ dps fzemos o get especial com o parametro.
 
 summary mesma ideia. 
 sempre atentando aos retornos e as rotas, para nao errar.
+
+-----------------------
+deploy numa aplicacao
+
+tem que converter p js, nngm entender ts
+poderiamos usar a propria compilador do 
+typescript, tendo que configurar la
+o dir root e out root no tsconfig json
+pra gerar um build. 
+
+mas vms fazer com tsup
+
+ele por baixo dos panos usar esbuild, que
+agilizar as coisas mais modernas
+
+assim com o tsx e o vitest, que usamos ali no
+script pra executar nosssos codigosd (run e test)
+, o tsup tbm usa o esbuild.
+
+fazemos o scrip para fzr npm run build(tsup src),
+e criamos a pasta build que eh a conversao de todo
+nosso codigo para js, que nao vamos entender nada,
+inclusive ta em commonJS
+
+agora, devemos conseguir rodar o nosso projeto apenas
+com o node puro, sem precisar do tsx.
+node build/server.cjs - vms rodar o build
+tem que funcionar. eh disso que precisamos para fzr deploy.
+rodar o servidor usando node puro.
+
+vejamos que a pasta build ta sendo irritada pelo eslint. 
+nao faz sentido o nosso eslint botar a mao la
+
+ent criar .eslintignore e colocar o build la, e o 
+node_modules tbm, aproveitando.
+
+temos que colocar esse build que fizemos la no gitignore.
+
+- curiosidade - como  o tsc serve p trnasformar ts em js,
+quando usamos ele, ele cria por ex knexfile.js por causa do
+knexfile.ts, e alguns outros casos.
+
+
+
+
+
+
+
+

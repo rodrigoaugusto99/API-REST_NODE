@@ -531,10 +531,32 @@ de cookie, entao pegaresmos o cookie dessa transacao e faremos um request GET. (
 foi POST pra criacao)
 
 
+---------------------
+usamos o mesmo banco sqlite tanto pra desenvolviment oquanto pra teste 
 
+vms criar um .env pra testes tbm, com outra pasta de banco la 
 
+no env/index.ts, vamos fzr condicional p alterar a variavel de ambiente
+para .env.test quando o process.env.NODE_ENV for test (eh teste automaticamente)
+quando estamos rodand otestes.
 
+e ai quando roda teste, cria a pasta db/test.db.
+porem, tem que rodar as migrations ne, so fizemos as migrations
+da parte de desenvolviemnto.
+Como cada teste tem que ser zerado, separado de todos, independnetes de tudo,
+entao vamos, antes de cada teste, rodar um rollback nas migrations e depois 
+criar do zero com migrations:latest. repare que fizemos com execSync que eh
+um metodo que permite rodarmos comandos no terminal durante a aplicacao rodando. 
 
+na database.ts
 
+import { env } from './env'
 
+export const config: Knex.Config = {
+  client: 'sqlite',
+  connection: {
+    filename: env.DATABASE_URL,
+  },
 
+repare que filename tem que ser dinamico. vai trocar
+de acordo com a variavel de ambiente. (que muda com a condicional)

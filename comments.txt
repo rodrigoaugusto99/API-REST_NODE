@@ -661,11 +661,34 @@ host: ("RENDER" in process.env) ? '0.0.0.0' : 'localhost',
 
 no package.json, "node": "18" - pra usar a versao do video
 
+no render- vamos criar um banco postgrees
+vms fzr web service, botar a aplicacao q subimos no github
+configuramos o bagulho -
+root directoryu - so quando no mesmo repositorio tiver mais de um projeto. 
+nesse n precisa, pois eh so o backend mesmo.
+Build Command: npm install && npm run knex -- migrate:latest && npm run build
 
+Start Command: node build/server.js
 
+no projeto local, podemos so rodar o npm build que vai funcionaer.
+mas o render nao tem o tsup.
 
+por isso tem aquela ordem pro render no build comand.
+npm install p baixar td
+tbm eh bom ja rodar as migrations
+dps o npm run build
 
+e o start command eh o "node build/server.js"
+pq o nosso build, por causa do npm run build, foi criado
+como uma pasta build contendo o arquivo server.js.
 
+quando der deploy, vai aparecer ali no render que o deploy foi feito 
+e aparecer a mensagenzinha de http is running.
+
+agora, podemos usar o imnsonia p testar.
+basta trocarmos o localhost pela url que o render nos deu.
+e voa la. agora nao precisamos rodar npm run dev no backend kkkkk
+"em 90 dias, td acabaras"
 
 
 
